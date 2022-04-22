@@ -1,6 +1,5 @@
-from email.header import Header
 from pygame import *
-from src.screen import *
+from src.game import *
 
 init()
 WIDTH = 800
@@ -15,16 +14,20 @@ timer = time.Clock()
 screen = display.set_mode((WIDTH, HEIGHT))
 display.set_caption("remaider game")
 
+game = Game()
+
 running = True
 while running :
     timer.tick(fps)
-    screen.fill(White)
+    screen.fill(black)
 
     for even in event.get():
         if even.type == QUIT:
             running = False
+    
+    game.update(event.get(), HEIGHT, WIDTH, screen)
 
-
+    display.update()
     display.flip()
 
 
