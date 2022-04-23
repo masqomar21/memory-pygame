@@ -1,4 +1,5 @@
 from pygame import *
+import pygame
 from random import *
 from os import *
 
@@ -27,6 +28,9 @@ class Game:
         pass
 
     def input_user(self, event_list):
+        for event in event_list :
+            if event.type == pygame.MOUSEBUTTONDOWN :
+                print("ok")
         pass
 
 

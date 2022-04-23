@@ -22,11 +22,12 @@ while running :
     timer.tick(fps)
     screen.fill(black)
 
-    for even in event.get():
+    event_list = event.get()
+    for even in event_list :
         if even.type == QUIT:
             running = False
     
-    game.update(event.get(), HEIGHT, WIDTH, screen)
+    game.update(event_list, HEIGHT, WIDTH, screen)
 
     display.update()
     display.flip()
