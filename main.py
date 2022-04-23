@@ -1,6 +1,7 @@
 from pygame import *
 from src.game import *
 
+
 init()
 WIDTH = 800
 HEIGHT = 600
