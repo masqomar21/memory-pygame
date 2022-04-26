@@ -9,9 +9,8 @@ timer = time.Clock()
 
 display.set_caption("remaider game")
 
-game = Game()\
+game = Game()
 
-running = True
 while game.running :
     timer.tick(game.FPS)
     game.SCREEN.fill(game.BLACK)

@@ -1,26 +1,36 @@
 from asyncio.windows_events import NULL
+from tkinter import Toplevel
 from pygame import *
 from random import *
-from abc import ABC, abstractmethod, ABCMeta
 
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 
-class Cards(sprite.Sprite, ABC) :
-    def __init__(self) -> None:
+class Cards(sprite.Sprite) :
+    def __init__(self, filename, posx, posy, theme) :
         super().__init__()
-        self.image = NULL
-        self.card_opened = False
+        self.theme = theme
+        self.name = filename.split(".")[0]
+
+        self.original_image = image.load("figure/"+self.theme+"/"+filename)
+
+        self.back_image = image.load("figure/"+self.theme+"/"+filename)
+        draw.rect(self.back_image, WHITE, self.back_image.get_rect())
+
+        self.image = self.back_image
+        self.rect = self.image.get_rect(topleft= (posx, posy))
+        self.shown = False
+
+    def show(self) :
+        self.shown = True
+    def hide(self) :
+        self.shown = False
     
-    def open_card(self, card_image):
-        self.image = card_image
-        self.card_opened = True
-        pass
-
-    def generet_image(self) :
-        pass
-
-    def close_card(self) : 
-        pass
+    def update(self) :
+        if self.shown :
+            self.image = self.original_image
+        else :
+            self.image = self.back_image
+        # self.image = self.original_image if self.shown else self.back_image
