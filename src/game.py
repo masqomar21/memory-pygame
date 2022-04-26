@@ -13,7 +13,7 @@ from src.menu import *
 class Game:
     def __init__(self):
         #font family
-        self.WIDTH, self.HEIGTH = 800, 600
+        self.WIDTH, self.HEIGTH = 1280, 860
         self.FPS = 60
         self.SCREEN = pygame.display.set_mode((self.WIDTH, self.HEIGTH))
 
@@ -31,7 +31,7 @@ class Game:
         #card
         self.card_list = [f for f in listdir("figure/"+self.thame) if path.join("figure/"+self.thame, f)]
 
-        self.img_w, self.img_h = 150, 150
+        self.img_w, self.img_h = 128, 128
         self.pad = 20
         self.margin_top = 160
         self.cols = 4
