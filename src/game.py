@@ -9,7 +9,10 @@ from src.menu import *
 class Game:
     def __init__(self):
         #font family
-      
+        self.WIDTH, self.HEIGTH = 800, 600
+        self.FPS = 60
+        self.SCREEN = pygame.display.set_mode((self.WIDTH, self.HEIGTH))
+
         self.font_title = font.Font("font/njnaruto.ttf", 44)
         self.font_content = font.Font("font/njnaruto.ttf", 24)
 
@@ -19,43 +22,28 @@ class Game:
         self.level_complete = False
         self.game_over = False
         self.background = NULL #image.load("img/background.jpg")
-        self.HEIGTH = 0
-        self.WIDTH = 0
-        self.SCREEN = NULL
+        self.playing, self.running = False, True
+
 
         self.BLACK = (0, 0, 0)
         self.WHITE = (255, 255, 255)
         self.RED = (255, 0, 0)
 
-        #menu
-        self.main_menu = NULL
-
-
-
-        self.event_list = NULL
-
-        
-
-    def update(self, event_list, heigth, width, screen):
-
-        self.HEIGTH = heigth
-        self.WIDTH = width
-        self.SCREEN = screen
-
-        self.event_list = event_list
-    
         self.main_menu = Main_menu(self)
-        self.main_menu.update()
-        # self.main_menu.draw_menu()
-        # self.main_menu.input_menu()
+        self.theme_menu = theme(self)
+        self.cur_menu = self.main_menu
+
+        #menu
 
 
-        # self.input_user()
-        # self.draw()
-        pass
 
-    def input_user(self,):
-        for event in self.event_list :
+    def update(self, event_list):
+        self.draw()
+        self.input_user(event_list)
+
+
+    def input_user(self,event_list):
+        for event in event_list :
             if event.type == pygame.MOUSEBUTTONDOWN :
                 print("ok")
         pass

@@ -2,31 +2,23 @@ from asyncio.windows_events import NULL
 from itertools import starmap
 import pygame
 from pygame import *
+from abc import ABC, abstractmethod, ABCMeta
 
 
-
-class Menu():
+class Menu( ABC):
     hover = False
     def __init__ (self, game) :
-        self.game = game
-        self.min_width = self.game.WIDTH // 2,
-        self.min_height = self.game.HEIGTH // 2
-        self.font_color = self.game.WHITE
         self.GRAY = (100, 100, 100)
+        self.sky_blue = (135, 206, 250)
+        self.game = game
+        self.min_width = self.game.WIDTH / 2
+        self.min_height = self.game.HEIGTH / 2
+        self.font_color = self.game.WHITE
+        self.rect_color = self.GRAY
+        self.state = 'main'
 
-        # self. run_display = True
 
-        self.cursor_rect = Rect(0, 0, 20, 20)
-        self.offset = 100
-
-    def cek_hover(self) :
-        if self.hover :
-            self.font_color = self.game.RED
-            
-        else :
-            self.font_color = self.game.WHITE
-
-    def draw_rect(self, rect, posx, posy) :
+    def get_rect(self, rect, posx, posy) :
         Rect = rect.get_rect(midtop = (posx, posy))
         return Rect
 
@@ -36,21 +28,32 @@ class Menu():
     def blit_screen(self):
         display.update()
 
+    def draw_rect(self,color, posx, posy, w, h, border_raduis) :
+        return draw.rect(self.game.SCREEN, color, (posx, posy, w, h), border_radius= border_raduis)
+
+    
+    def cek_hover(self) :
+        if self.hover :
+            self.rect_color = self.sky_blue
+            
+        else :
+            self.rect_color = self.GRAY
+
+   
+
 
 class Main_menu(Menu) :
     def __init__(self, game) :
         Menu.__init__(self, game)
-        self.main_menu_rect = NULL
-        self.start_rect = NULL
-        self.theme_rect = NULL
-        self.quit_rect = NULL
-        self.state = "main"
-        self.startx, self.starty = self.game.WIDTH // 2, 180
+        self.w, self.h = 140, 30
+        self.off = self.w / 2
 
-        self.themex, self.themey = self.game.WIDTH // 2, 220
-        self.quitx, self.quity = self.game.WIDTH // 2, 260
+        self.startx, self.starty = (self.min_width - self.off), 180
+        self.themex, self.themey = (self.min_width - self.off), 230
+        self.quitx, self.quity = (self.min_width - self.off), 280
 
-        self.cursor_rect.midtop = (self.startx + self.offset, self.starty)
+        # self.theme_menu = theme(self.game)
+        # self.is_theme = False
 
     def draw_menu(self) :
         
@@ -60,54 +63,104 @@ class Main_menu(Menu) :
         quit_game = self.game.font_content.render("Quit Game", True, self.font_color)
 
         #rect 
-        self.main_menu_rect = self.draw_rect(main_menu, self.game.WIDTH // 2, 100)
-        self.start_rect = self.draw_rect(start_game, self.startx, self.starty)
-        self.theme_rect = self.draw_rect(theme, self.themex, self.themey)
-        self.quit_rect = self.draw_rect(quit_game, self.quitx, self.quity)
+        self.main_menu_rect = self.get_rect(main_menu, self.min_width, 100)
+        self.start_rect = self.draw_rect(self.rect_color, self.startx, self.starty, self.w, self.h, 8 )
+        self.theme_rect = self.draw_rect(self.rect_color, self.themex, self.themey, self.w, self.h, 8 )
+        self.quit_rect =  self.draw_rect(self.rect_color, self.quitx, self.quity, self.w, self.h, 8 )
 
-        self.cursor_rect.midtop = (self.startx + self.offset, self.starty)
 
         self.blit_menu(main_menu, self.main_menu_rect)
         self.blit_menu(start_game, self.start_rect)
         self.blit_menu(theme, self.theme_rect)
         self.blit_menu(quit_game, self.quit_rect)
 
+
     def cursor_move(self) :
         for event in self.game.event_list :
-            if event.type == pygame.MOUSE :
+            if event.type == pygame.MOUSEMOTION and not self.hover :
                 if self.start_rect.collidepoint(event.pos) :
-        
                     self.hover = True
-                    
                 elif Rect(self.theme_rect).collidepoint(event.pos) :
                     self.hover = True
                 elif Rect(self.quit_rect).collidepoint(event.pos) :
                     self.hover = True
-                else : 
-                    self.hover = False
+                self.blit_screen()
+            else : 
+                self.hover = False
+            self.blit_screen()
+    
+    def input_menu(self, event_list) :
+        # print(self.state)
+        for event in event_list :
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 :
+                if self.start_rect.collidepoint(mouse.get_pos()) :
+                    self.game.playing = True
+                    self.state = 'game'
+                elif self.theme_rect.collidepoint(mouse.get_pos()) :
+                    self.state = "theme"
+                    self.game.cur_menu = self.game.theme_menu
+                elif self.quit_rect.collidepoint(mouse.get_pos()) :
+                    self.state = "quit"
+                self.cek_state(event_list)
 
-            self.cek_hover()
+    def cek_state(self, event_list) :
+        print(self.state)
+        if self.state == 'main' :
+            self.update(event_list)
+        elif self.state == 'theme' :
+            self.game.cur_menu.update(event_list)
+        elif self.state == 'game' :
+            self.game.update(event_list)
+        elif self.state == 'quit' :
+            self.game.playing = False
+            self.game.running = False
 
-            
-
-        self.blit_screen()
-
-
-
-     
-       
-    def input_menu(self):
-        for event in self.game.event_list :
-            if event.type == pygame.MOUSEBUTTONDOWN :
-                print(self.game.HEIGTH)
-                print(self.min_height)
-                print("ok")
-        pass
-
-    def update(self) :
+    def update(self, event_list) :
         self.draw_menu()
-        self.cursor_move()
-        self.input_menu()
+        # self.cursor_move()
+        self.input_menu(event_list)
 
-# class theme(menu):
-    # def __init__(self)
+class theme(Menu):
+    def __init__(self, game) :
+        Menu.__init__(self, game)
+        self.game = game
+        self.rect_color = self.game.WHITE
+        self.w, self.h = 150, 150
+        self.theme1x = self.min_width - 200
+        self.theme2x = self.min_width + 65
+
+
+        self.quitx, self.quity = self.min_width, self.min_height +100
+
+    def draw_menu(self) :
+        game_theme = self.game.font_title.render("Game Theme", True, self.font_color)
+        quit = self.game.font_content.render("Quit", True, self.font_color)
+
+
+        self.theme_rect = self.get_rect(game_theme, self.min_width, 100)
+        self.theme1_rect = self.draw_rect(self.rect_color, self.theme1x, self.min_height-105, self.w, self.h, 8 )
+        self.theme2_rect = self.draw_rect(self.rect_color, self.theme2x, self.min_height-105, self.w, self.h, 8 )
+
+        self.quit_rect = self.draw_rect(self.GRAY, self.quitx, self.quity, 65, 30, 8 )
+
+        self.blit_menu(game_theme, self.theme_rect)
+        self.blit_menu(quit, self.quit_rect)
+
+
+    def input_menu(self, event_list) :
+        for event in event_list :
+            if event.type == pygame.MOUSEBUTTONDOWN :
+                if Rect(self.theme1_rect).collidepoint(event.pos) :
+                    self.game.theme = 1
+                elif Rect(self.theme2_rect).collidepoint(event.pos) :
+                    self.game.theme = 2
+                if Rect(self.quit_rect).collidepoint(event.pos) :
+                    self.game.cur_menu = self.game.main_menu
+
+    def update(self,event_list) :
+        self.draw_menu()
+        self.input_menu(event_list)
+
+
+
+
