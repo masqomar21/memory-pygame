@@ -27,9 +27,9 @@ class Game:
         self.game_over = False
         self.background = NULL #image.load("img/background.jpg")
         self.playing, self.running = False, True
-        self.thame = "jhutsu"
+        self.theme = "jhutsu"
         #card
-        self.card_list = [f for f in listdir("figure/"+self.thame) if path.join("figure/"+self.thame, f)]
+        self.card_list = [f for f in listdir("figure/"+self.theme) if path.join("figure/"+self.theme, f)]
 
         self.img_w, self.img_h = 128, 128
         self.pad = 20
@@ -118,7 +118,7 @@ class Game:
         for i in range(len(cards)) :
             posx = LEFT_MARGIN + ((self.img_w + self.pad) * (i % self.cols))
             posy = self.margin_top + (i // self.rows * (self.img_h + self.pad))
-            card  = Cards(cards[i], posx, posy, self.thame)
+            card  = Cards(cards[i], posx, posy, self.theme)
             self.card_grup.add(card)
 
 
