@@ -28,6 +28,7 @@ class Game:
         self.background = NULL #image.load("img/background.jpg")
         self.playing, self.running = False, True
         self.theme = "jhutsu"
+        
         #card
         self.card_list = [f for f in listdir("figure/"+self.theme) if path.join("figure/"+self.theme, f)]
 
@@ -49,6 +50,7 @@ class Game:
         self.BLACK = (0, 0, 0)
         self.WHITE = (255, 255, 255)
         self.RED = (255, 0, 0)
+        self.GRY = (128, 128, 128)
 
         #menu
         self.main_menu = Main_menu(self)
@@ -98,18 +100,25 @@ class Game:
     def input_user(self,event_list):
         for event in event_list :
             if event.type == pygame.MOUSEBUTTONDOWN :
-                print("ok")
+               if self.level_complete :
+                   self.level += 1
+                   if self.level > 5 :
+                        self.level = 1
+                   self.generete_level(self.level)
+            if event.type == pygame.KEYDOWN :
+                if event.key == pygame.K_SPACE and self.level_complete :
+                    self.playing = False
 
     def generete_level(self, level):
         self.card = self.random_select_card(self.level)
         self.level_complete = False
-        self.rows = self.rows +1
+        self.rows = self.level +1
         self.cols= 4
         self.generate_card(self.card)
     
     def generate_card(self, cards):
         self.cols = self.rows = self.cols if self.cols >= self.rows else self.rows
-
+        
         CARD_W = (self.img_w * self. cols + self.pad *3)
         LEFT_MARGIN = RIGHT_MARGIN = (self.WIDTH - CARD_W) // 2
 
@@ -151,10 +160,18 @@ class Game:
         self.SCREEN.blit(score_text, score_rect)
         self.SCREEN.blit(info_text, info_rect)
 
+        
+
+        if not self.level == 5 :
+            next_level_text = self.font_content.render("Level Complete, klik the right button to next level", True, (self.WHITE))
+        else :
+            next_level_text = self.font_content.render("Game Complete, press space for back to main menu", True, (self.WHITE))
+        text_rect = next_level_text.get_rect(midtop = (self.WIDTH // 2, self.HEIGTH - 90))
+
         #draw card
         self.card_grup.draw(self.SCREEN)
         self.card_grup.update()
 
-        # if self.level_complete :
-        #     self.SCREEN.
+        if self.level_complete :
+            self.SCREEN.blit(next_level_text, text_rect)
 
