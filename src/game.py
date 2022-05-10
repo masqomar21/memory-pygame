@@ -1,7 +1,9 @@
-import fractions
 from asyncio.windows_events import NULL
 from os import *
+from time import *
 from random import *
+from tkinter import mainloop
+from traceback import print_tb
 
 import pygame
 from pygame import *
@@ -13,7 +15,7 @@ from src.menu import *
 class Game:
     def __init__(self):
         #font family
-        self.WIDTH, self.HEIGTH = 1280, 860
+        self.WIDTH, self.HEIGTH = 1180, 700
         self.FPS = 60
         self.SCREEN = pygame.display.set_mode((self.WIDTH, self.HEIGTH))
 
@@ -25,9 +27,10 @@ class Game:
         self.score = 0
         self.level_complete = False
         self.game_over = False
-        self.background = NULL #image.load("img/background.jpg")
+        # self.background = NULL
         self.playing, self.running = False, True
         self.theme = "jhutsu"
+        
         
         #card
         self.card_list = [f for f in listdir("figure/"+self.theme) if path.join("figure/"+self.theme, f)]
@@ -44,7 +47,14 @@ class Game:
         self.frame_count = 0
         self.block_game = False
 
+        self.time = self.level * 30
+        self.back_up_time = 1 * 10
+        self.time_counter = 0
+        self.end_time = False
         self.generete_level(self.level)
+        # self.coundown()
+        
+
 
         #color
         self.BLACK = (0, 0, 0)
@@ -62,49 +72,60 @@ class Game:
     def update(self, event_list):
         self.draw()
         self.input_user(event_list)
+        # self.coundown()
         self.cek_complete(event_list)
 
     def cek_complete(self, event_list):
-        if not self.block_game :
-            for event in event_list :
-                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 :
-                    for card in self.card_grup :
-                        if card.rect.collidepoint(event.pos)  :
-                            
-                            self.flipped.append(card.name)
-                            card.show()
-                            if len(self.flipped) == 2 :
-                                if self.flipped[0] != self.flipped[1] :
-                                    self.block_game = True
-                                else :
-                                    self.flipped = [] 
-                                    for card in self.card_grup :
-                                        if card.shown :
-                                            self.level_complete = True
-                                        else :
-                                            self.level_complete = False
-                                            break
-        else :
-            self.frame_count += 1
-            if self.frame_count == self.FPS :
-                self.frame_count = 0
-                self.block_game = False
+        # self.coundown()
+        if not self.end_time :
+            if not self.block_game :
+                for event in event_list :
+                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 :
+                        for card in self.card_grup :
+                            if card.rect.collidepoint(event.pos)  :
+                                self.flipped.append(card.name)
+                                card.show()
+                                if len(self.flipped) == 2 :
+                                    if self.flipped[0] != self.flipped[1] :
+                                        self.block_game = True
+                                    else :
+                                        self.flipped = [] 
+                                        for card in self.card_grup :
+                                            if card.shown :
+                                                self.level_complete = True
+                                                self.time_reset()
+                                            else :
+                                                self.level_complete = False
+                                                break
+            else :
+                self.frame_count += 1
+                # print (self.frame_count)
+                if self.frame_count == self.FPS :
+                    self.frame_count = 0
+                    self.block_game = False
 
-                for card in self.card_grup :
-                    if card.name in self.flipped :
-                        card.hide()
-                self.flipped = []
+                    for card in self.card_grup :
+                        if card.name in self.flipped :
+                            card.hide()
+                    self.flipped = []
+        else :
+            self.game_over = True
+            self.playing = False
             
 
 
     def input_user(self,event_list):
         for event in event_list :
+            # self.coundown()
             if event.type == pygame.MOUSEBUTTONDOWN :
                if self.level_complete :
+                   self .time_reset()
                    self.level += 1
+                   self.time = self.level * 10
                    if self.level > 5 :
                         self.level = 1
                    self.generete_level(self.level)
+
             if event.type == pygame.KEYDOWN :
                 if event.key == pygame.K_SPACE and self.level_complete :
                     self.playing = False
@@ -114,6 +135,7 @@ class Game:
         self.level_complete = False
         self.rows = self.level +1
         self.cols= 4
+        self.coundown()
         self.generate_card(self.card)
     
     def generate_card(self, cards):
@@ -137,6 +159,28 @@ class Game:
         card.extend(copy_card)
         shuffle(card)
         return card
+
+    def coundown(self):
+        
+        self.time_counter += 1
+        if self.time_counter % self.FPS == 0 :
+            self.time -= 1
+            mins, secs = divmod(self.time, 60)
+            self.time_format = "%02d:%02d" % (mins, secs)
+            print("time left : ",self.time_format, end = "\r")
+            self.time_counter = 0
+            if self.time == 0 :
+                self.time_counter = 0
+                self.end_time = True
+                self.time = self.back_up_time
+
+    def time_reset(self):
+        self.time_counter = 0
+        self.time_format = "%02d:%02d" % (0, 0)
+        self.end_time = False
+
+
+
 
 
     def draw (self):

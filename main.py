@@ -10,10 +10,12 @@ timer = time.Clock()
 display.set_caption("remaider game")
 
 game = Game()
+# time.set_timer(USEREVENT, 1000)
 
 while game.running :
     timer.tick(game.FPS)
     game.SCREEN.fill(game.BLACK)
+
 
     event_list = event.get()
     for even in event_list :

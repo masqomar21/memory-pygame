@@ -1,5 +1,3 @@
-from asyncio.windows_events import NULL
-from tkinter import Toplevel
 from pygame import *
 from random import *
 
