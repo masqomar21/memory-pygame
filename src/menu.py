@@ -8,6 +8,8 @@ from abc import ABC, abstractmethod, ABCMeta
 class Menu( ABC):
     hover = False
     def __init__ (self, game) :
+        self.font_menu = font.Font("font/njnaruto.ttf", 100)
+        self.font_menu_content = font.Font("font/njnaruto.ttf", 60)
         self.GRAY = (100, 100, 100)
         self.sky_blue = (135, 206, 250)
         self.game = game
@@ -54,10 +56,10 @@ class Main_menu(Menu) :
 
     def draw_menu(self) :
         # text
-        main_menu = self.game.font_title.render("Main Menu", True, self.font_color)
-        start_game = self.game.font_content.render("Start Game", True, self.font_color)
-        theme = self.game.font_content.render("Game Theme", True, self.font_color)
-        quit_game = self.game.font_content.render("Quit Game", True, self.font_color)
+        main_menu = self.font_menu.render("Main Menu", True, self.font_color)
+        start_game = self.font_menu_content.render("Start Game", True, self.font_color)
+        theme = self.font_menu_content.render("Game Theme", True, self.font_color)
+        quit_game = self.font_menu_content.render("Quit Game", True, self.font_color)
 
         #rect 
         self.main_menu_rect = self.get_rect(main_menu, self.min_width, 100)

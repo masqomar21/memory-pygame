@@ -13,7 +13,7 @@ from src.menu import *
 class Game:
     def __init__(self):
         #font family
-        self.WIDTH, self.HEIGTH = 1280, 860
+        self.WIDTH, self.HEIGTH = 1080, 620
         self.FPS = 60
         self.SCREEN = pygame.display.set_mode((self.WIDTH, self.HEIGTH))
 
