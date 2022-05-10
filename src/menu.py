@@ -6,6 +6,8 @@ from abc import ABC, abstractmethod, ABCMeta
 class Menu( ABC):
     hover = False
     def __init__ (self, game) :
+        self.font_menu = font.Font("font/njnaruto.ttf", 100)
+        self.font_menu_content = font.Font("font/njnaruto.ttf", 60)
         self.GRAY = (100, 100, 100)
         self.sky_blue = (135, 206, 250)
         self.game = game

@@ -16,6 +16,7 @@ class Game:
     def __init__(self):
         #font family
         self.WIDTH, self.HEIGTH = 1180, 700
+
         self.FPS = 60
         self.SCREEN = pygame.display.set_mode((self.WIDTH, self.HEIGTH))
 
@@ -115,6 +116,7 @@ class Game:
 
 
     def input_user(self,event_list):
+        self.coundown()
         for event in event_list :
             # self.coundown()
             if event.type == pygame.MOUSEBUTTONDOWN :
