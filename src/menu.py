@@ -1,5 +1,6 @@
 import pygame
 from pygame import *
+from pygame_gui import *
 from abc import ABC, abstractmethod, ABCMeta
 
 
@@ -53,6 +54,7 @@ class Main_menu(Menu) :
         self.quitx, self.quity = (self.min_width - self.off), 280
 
     def draw_menu(self) :
+        self.game.draw_background()
         # text
         main_menu = self.game.font_title.render("Main Menu", True, self.font_color)
         start_game = self.game.font_content.render("Start Game", True, self.font_color)
@@ -99,12 +101,13 @@ class Main_menu(Menu) :
 
     def cek_state(self, event_list) :
         print(self.state)
-        if self.state == 'main' :
-            self.update(event_list)
-        elif self.state == 'theme' :
+        # if self.state == 'main' :
+        #     self.update(event_list)
+        if self.state == 'theme' :
             self.game.cur_menu = self.game.theme_menu
         elif self.state == 'game' :
             self.game.playing = True
+            self.game.game_over = False
         elif self.state == 'quit' :
             self.game.playing = False
             self.game.running = False
@@ -126,6 +129,7 @@ class theme(Menu):
         self.quitx, self.quity = self.min_width - 65/2, self.min_height +100
 
     def draw_menu(self) :
+        self.game.draw_background()
         # text
         game_theme = self.game.font_title.render("Game Theme", True, self.font_color)
         quit = self.game.font_content.render("Quit", True, self.font_color)
@@ -145,9 +149,9 @@ class theme(Menu):
         for event in event_list :
             if event.type == pygame.MOUSEBUTTONDOWN :
                 if Rect(self.theme1_rect).collidepoint(event.pos) :
-                    self.game.theme = 1
+                    self.game.cek_theme = 1
                 elif Rect(self.theme2_rect).collidepoint(event.pos) :
-                    self.game.theme = 2
+                    self.game.cek_theme = 2
                 if Rect(self.quit_rect).collidepoint(event.pos) :
                     self.game.cur_menu = self.game.main_menu
 
