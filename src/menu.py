@@ -155,6 +155,10 @@ class theme(Menu):
                 if Rect(self.quit_rect).collidepoint(event.pos) :
                     self.game.cur_menu = self.game.main_menu
 
+                self.game.check_theme()
+                if self.game.theme_update :
+                    self.game.get_background()
+
     def update(self,event_list) :
         self.draw_menu()
         self.input_menu(event_list)

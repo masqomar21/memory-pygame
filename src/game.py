@@ -54,11 +54,12 @@ class Game:
 
         #countdown time
         self.time = self.level * 30
-        self.back_up_time = 1 * 10
+        self.back_up_time = 1 * 30
         self.time_counter = 0
         self.end_time = False
         
         self.get_background()
+        self.theme_update = False
 
         #color
         self.BLACK = (0, 0, 0)
@@ -86,6 +87,7 @@ class Game:
         if cek :
             print ("theme : ", self.theme)
             cek = False
+        
 
         #card
         self.card_list = [f for f in listdir("figure/"+self.theme) if path.join("figure/"+self.theme, f)]
@@ -220,10 +222,13 @@ class Game:
 
        
     def check_theme(self) :
+        self.theme_update = False
         if self.cek_theme == 1 :
             self.theme = "jhutsu"
+            self.theme_update = True
         elif self.cek_theme == 2 :
             self.theme = "ciby"
+            self.theme_update = True
 
 
     def get_background(self):
