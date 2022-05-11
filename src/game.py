@@ -2,7 +2,6 @@ from asyncio.windows_events import NULL
 from os import *
 from time import *
 from random import *
-from turtle import screensize
 import cv2
 from tkinter import mainloop
 from traceback import print_tb
@@ -78,6 +77,9 @@ class Game:
         pygame.mixer.music.play()
 
 
+        self.time_reset()
+
+
     def add_score(self):
         self.__score += self.score_adding
 
@@ -98,6 +100,7 @@ class Game:
         if self.level == 1 and not self.cek_start :
             self.game_init()
             self.cek_start = True
+        # self.time_reset()
         self.draw()
         self.check_theme()
         self.input_user(event_list)
@@ -200,7 +203,6 @@ class Game:
         return card
 
     def coundown(self):
-        
         self.time_counter += 1
         if not self.level_complete :
             if self.time_counter % self.FPS == 0 :
@@ -216,7 +218,6 @@ class Game:
 
     def time_reset(self):
         self.time_counter = 0
-
         self.time_format = "%02d:%02d" % (0, 0)
         self.end_time = False
 
@@ -257,6 +258,9 @@ class Game:
         level_text = self.font_content.render("Level: " + str(self.level), True, (self.BLACK))
         level_rect = level_text.get_rect(midtop = (self.WIDTH // 2 - 200, 80))
 
+        time_text = self.font_content.render(self.time_format, True, (self.BLACK))
+        time_rect = time_text.get_rect(midtop = (self.WIDTH // 2 , 80))
+
         score_text = self.font_content.render("Score: " + str(self.__score), True, (self.BLACK))
         score_rect = score_text.get_rect(midtop = (self.WIDTH // 2 + 200, 80))
 
@@ -267,6 +271,7 @@ class Game:
 
         self.SCREEN.blit(title_text, title_rect)
         self.SCREEN.blit(level_text, level_rect)
+        self.SCREEN.blit(time_text, time_rect)
         self.SCREEN.blit(score_text, score_rect)
         self.SCREEN.blit(info_text, info_rect)
 

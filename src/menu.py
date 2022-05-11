@@ -101,8 +101,8 @@ class Main_menu(Menu) :
 
     def cek_state(self, event_list) :
         print(self.state)
-        # if self.state == 'main' :
-        #     self.update(event_list)
+        if self.state == 'game' and self.game.game_over :
+            self.state = 'main'
         if self.state == 'theme' :
             self.game.cur_menu = self.game.theme_menu
         elif self.state == 'game' :
@@ -134,6 +134,9 @@ class theme(Menu):
         game_theme = self.game.font_title.render("Game Theme", True, self.font_color)
         quit = self.game.font_content.render("Quit", True, self.font_color)
 
+        icon_theme1 = image.load("figure/theme1.png")
+        icon_theme2 = image.load("figure/theme2.jpg")
+
         #rect
         self.theme_rect = self.get_rect(game_theme, self.min_width, 100)
         self.theme1_rect = self.draw_rect(self.rect_color, self.theme1x, self.min_height-105, self.w, self.h, 8 )
@@ -142,6 +145,8 @@ class theme(Menu):
 
         #blit
         self.blit_menu(game_theme, self.theme_rect)
+        self.blit_menu(icon_theme1, self.theme1_rect)
+        self.blit_menu(icon_theme2, self.theme2_rect)
         self.blit_menu(quit, self.quit_rect)
 
 
