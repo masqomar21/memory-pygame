@@ -80,8 +80,19 @@ class Game:
         self.time_reset()
 
 
+        self.cek = False
+        self.h = 240
+        self.w = 470
+
+
     def add_score(self):
         self.__score += self.score_adding
+
+    def min_score(self):
+        if self.__score <= 0 :
+            self.__score = 0
+        else :
+            self.__score -= 1
 
     def game_init(self):
         cek = True
@@ -113,25 +124,28 @@ class Game:
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 :
                         for card in self.card_grup :
                             if card.rect.collidepoint(event.pos)  :
-                                self.flipped.append(card.name)
-                                card.show()
-                                if len(self.flipped) == 2 :
-                                    if self.flipped[0] != self.flipped[1] :
-                                        self.block_game = True
-                                    else :
-                                        self.add_score()
-                                        self.flipped = [] 
-                                        for card in self.card_grup :
-                                            if card.shown :
-                                                self.level_complete = True
-                                                self.time_reset()
-                                            else :
-                                                self.level_complete = False
-                                                break
+                                if not card.shown :
+                                    self.flipped.append(card.name)
+                                    card.show()
+                                    if len(self.flipped) == 2 :
+                                        if self.flipped[0] != self.flipped[1] :
+                                            self.block_game = True
+                                        else :
+                                            self.add_score()
+                                            self.flipped = [] 
+                                            for card in self.card_grup :
+                                                if card.shown :
+                                                    self.level_complete = True
+                                                    self.cek = True
+                                                    self.time_reset()
+                                                else :
+                                                    self.level_complete = False
+                                                    self.cek = False
+                                                    break
             else :
                 self.frame_count += 1
-                # print (self.frame_count)
                 if self.frame_count == self.FPS :
+                    self.min_score()
                     self.frame_count = 0
                     self.block_game = False
 
@@ -160,11 +174,13 @@ class Game:
         for event in event_list :
             if event.type == pygame.MOUSEBUTTONDOWN :
                if self.level_complete :
+                    self.cek = True
                     self .time_reset()
                     self.level += 1
                     self.time = self.level * 30
                     if self.level > 5 :
                         self.level = 1
+                        self.game_reset()
                     self.generete_level(self.level)
             if event.type == pygame.KEYDOWN :
                 if event.key == pygame.K_SPACE and self.level_complete :
@@ -181,7 +197,7 @@ class Game:
     def generate_card(self, cards):
         self.cols = self.rows = self.cols if self.cols >= self.rows else self.rows
         
-        CARD_W = (self.img_w * self. cols + self.pad *3)
+        CARD_W = (self.img_w * self. cols + self.pad *(self.cols - 1))
         LEFT_MARGIN = RIGHT_MARGIN = (self.WIDTH - CARD_W) // 2
 
         self.card_grup.empty()
@@ -190,7 +206,6 @@ class Game:
             posx = LEFT_MARGIN + ((self.img_w + self.pad) * (i % self.cols))
             posy = self.margin_top + (i // self.rows * (self.img_h + self.pad))
             card  = Cards(cards[i], posx, posy, self.theme)
-            print (card.name)
             self.card_grup.add(card)
         print ("\n")
 
@@ -249,8 +264,24 @@ class Game:
 
 
     def draw (self):
-       
+
+        
+        if self.cek :
+            if self.level == 2 :
+                self.h = 350
+            elif self.level == 3 :
+                self.h = 465
+            elif self.level == 4 :
+                self.w = 580
+            elif self.level == 5 :
+                self.w = 690
+
+            print(self.level)
+            self.cek = False
+
         self.draw_background()
+
+        self.card_backgrund = draw.rect(self.SCREEN, self.GRY, ((self.WIDTH - self.w)/2, 150, self.w, self.h), border_radius= 15)
         #text
         title_text = self.font_title.render("NARUTO REMAIDER", True, self.BLACK)
         title_rect = title_text.get_rect(midtop = (self.WIDTH // 2, 10))
@@ -267,8 +298,6 @@ class Game:
         info_text = self.font_content.render("Cari 2 kartui yang sama", True, (self.BLACK))
         info_rect = info_text.get_rect(midtop = (self.WIDTH // 2, 120))
 
-        
-
         self.SCREEN.blit(title_text, title_rect)
         self.SCREEN.blit(level_text, level_rect)
         self.SCREEN.blit(time_text, time_rect)
@@ -284,6 +313,7 @@ class Game:
 
         #draw card
         self.card_grup.draw(self.SCREEN)
+        # self.card_backgrund = draw.rect(self.SCREEN, self.GRY, ((self.WIDTH - self.w)/2, 150, self.w, self.h), border_radius= 15)
         self.card_grup.update()
 
         if self.level_complete :
