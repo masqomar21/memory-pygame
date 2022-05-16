@@ -50,7 +50,6 @@ class Game:
         self.frame_count = 0
         self.block_game = False
 
-
         #countdown time
         self.time = self.level * 30
         self.back_up_time = 1 * 30
@@ -76,9 +75,7 @@ class Game:
         pygame.mixer.music.set_volume(0.3)
         pygame.mixer.music.play()
 
-
         self.time_reset()
-
 
         self.cek = False
         self.h = 240
@@ -86,7 +83,6 @@ class Game:
 
         self.img_level_complete = pygame.image.load("figure/level_complete.png")
         self.cek_page_complete = False
-
 
     def add_score(self):
         self.__score += self.score_adding
