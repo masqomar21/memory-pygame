@@ -1,3 +1,4 @@
+from numpy import size
 import pygame
 from pygame import *
 from pygame_gui import *
@@ -147,6 +148,8 @@ class theme(Menu):
 
     def draw_menu(self) :
         self.game.draw_background()
+
+        self.put_title_game()
         # text
         game_theme = self.game.font_title.render("Game Theme", True, self.font_color)
         quit = self.game.font_content.render("Quit", True, self.font_color)

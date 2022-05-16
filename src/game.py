@@ -84,6 +84,9 @@ class Game:
         self.h = 240
         self.w = 470
 
+        self.img_level_complete = pygame.image.load("figure/level_complete.png")
+        self.cek_page_complete = False
+
 
     def add_score(self):
         self.__score += self.score_adding
@@ -124,24 +127,27 @@ class Game:
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 :
                         for card in self.card_grup :
                             if card.rect.collidepoint(event.pos)  :
-                                if not card.shown :
-                                    self.flipped.append(card.name)
-                                    card.show()
-                                    if len(self.flipped) == 2 :
-                                        if self.flipped[0] != self.flipped[1] :
-                                            self.block_game = True
-                                        else :
-                                            self.add_score()
-                                            self.flipped = [] 
-                                            for card in self.card_grup :
-                                                if card.shown :
-                                                    self.level_complete = True
-                                                    self.cek = True
-                                                    self.time_reset()
-                                                else :
-                                                    self.level_complete = False
-                                                    self.cek = False
-                                                    break
+                                if self.cek_page_complete :
+                                    self.cek_page_complete = False
+                                else :
+                                    if not card.shown :
+                                        self.flipped.append(card.name)
+                                        card.show()
+                                        if len(self.flipped) == 2 :
+                                            if self.flipped[0] != self.flipped[1] :
+                                                self.block_game = True
+                                            else :
+                                                self.add_score()
+                                                self.flipped = [] 
+                                                for card in self.card_grup :
+                                                    if card.shown :
+                                                        self.level_complete = True
+                                                        self.cek = True
+                                                        self.time_reset()
+                                                    else :
+                                                        self.level_complete = False
+                                                        self.cek = False
+                                                        break
             else :
                 self.frame_count += 1
                 if self.frame_count == self.FPS :
@@ -173,15 +179,16 @@ class Game:
     def input_user(self,event_list):
         for event in event_list :
             if event.type == pygame.MOUSEBUTTONDOWN :
-               if self.level_complete :
-                    self.cek = True
-                    self .time_reset()
-                    self.level += 1
-                    self.time = self.level * 30
-                    if self.level > 5 :
-                        self.level = 1
-                        self.game_reset()
-                    self.generete_level(self.level)
+                if self.level_complete :
+                    if self.btn_next_level.collidepoint(event.pos) :
+                        self.cek = True
+                        self .time_reset()
+                        self.level += 1
+                        self.time = self.level * 30
+                        if self.level > 5 :
+                            self.level = 1
+                            self.game_reset()
+                        self.generete_level(self.level)
             if event.type == pygame.KEYDOWN :
                 if event.key == pygame.K_SPACE and self.level_complete :
                     self.playing = False
@@ -260,12 +267,16 @@ class Game:
             self.SCREEN.blit(image.frombuffer(self.img.tobytes(), self.shape, 'BGR'), (0, 0))
         else :
             self.get_background()
-       
+
+
+    def level_complete_page(self):
+        posx, posy = self.WIDTH // 2, 50
+        self.level_complete_page_rect = self.img_level_complete.get_rect(midtop = (posx, posy))
+        self.btn_next_level = draw.rect(self.SCREEN, (0, 0, 0), ((self.WIDTH // 2)-150, (self.HEIGTH // 2) + 85, 135, 60), border_radius=15)
+        self.SCREEN.blit(self.img_level_complete, self.level_complete_page_rect)
 
 
     def draw (self):
-
-        
         if self.cek :
             if self.level == 2 :
                 self.h = 350
@@ -304,7 +315,6 @@ class Game:
         self.SCREEN.blit(score_text, score_rect)
         self.SCREEN.blit(info_text, info_rect)
 
-
         if not self.level == 5 :
             next_level_text = self.font_content.render("Level Complete, klik the right button to next level", True, (self.BLACK))
         else :
@@ -317,5 +327,7 @@ class Game:
         self.card_grup.update()
 
         if self.level_complete :
+            self.level_complete_page()
             self.SCREEN.blit(next_level_text, text_rect)
+            self.cek_page_complete = True
 
