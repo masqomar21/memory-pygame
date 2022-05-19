@@ -1,10 +1,8 @@
-from asyncio.windows_events import NULL
 from os import *
 from time import *
 from random import *
 import cv2
-from tkinter import mainloop
-from traceback import print_tb
+
 
 import pygame
 from pygame import *
@@ -311,11 +309,8 @@ class Game:
         self.SCREEN.blit(score_text, score_rect)
         self.SCREEN.blit(info_text, info_rect)
 
-        if not self.level == 5 :
-            next_level_text = self.font_content.render("Level Complete, klik the right button to next level", True, (self.BLACK))
-        else :
-            next_level_text = self.font_content.render("Game Complete, press space for back to main menu", True, (self.BLACK))
-        text_rect = next_level_text.get_rect(midtop = (self.WIDTH // 2, self.HEIGTH - 90))
+        if self.level == 5 :
+            self.img_level_complete = image.load('figure/game_complete.png')
 
         #draw card
         self.card_grup.draw(self.SCREEN)
@@ -324,6 +319,5 @@ class Game:
 
         if self.level_complete :
             self.level_complete_page()
-            self.SCREEN.blit(next_level_text, text_rect)
             self.cek_page_complete = True
 

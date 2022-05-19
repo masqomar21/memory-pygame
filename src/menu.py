@@ -1,7 +1,6 @@
 from numpy import size
 import pygame
 from pygame import *
-from pygame_gui import *
 from abc import ABC, abstractmethod, ABCMeta
 
 
