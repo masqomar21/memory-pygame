@@ -153,6 +153,20 @@ class Game:
                         if card.name in self.flipped :
                             card.hide()
                     self.flipped = []
+                else :
+                    for event in event_list :
+                        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 :
+                            for card in self.card_grup :
+                                if card.rect.collidepoint(event.pos)  :
+                                    if not card.shown :
+                                        self.min_score()
+                                        self.frame_count = 0
+                                        self.block_game = False
+
+                                        for card in self.card_grup :
+                                            if card.name in self.flipped :
+                                                card.hide()
+                                        self.flipped = []
         else :
             self.game_over = True
             self.playing = False

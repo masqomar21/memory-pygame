@@ -31,4 +31,3 @@ class Cards(sprite.Sprite) :
             self.image = self.original_image
         else :
             self.image = self.back_image
-        # self.image = self.original_image if self.shown else self.back_image
