@@ -15,7 +15,7 @@ class Cards(sprite.Sprite) :
         self.original_image = image.load("figure/"+self.theme+"/"+filename)
 
         self.back_image = image.load("figure/"+self.theme+"/"+filename)
-        draw.rect(self.back_image, WHITE, self.back_image.get_rect())
+        # draw.rect(self.back_image, WHITE, self.back_image.get_rect())
 
         self.image = self.back_image
         self.rect = self.image.get_rect(topleft= (posx, posy))

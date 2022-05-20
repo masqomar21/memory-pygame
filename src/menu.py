@@ -196,11 +196,32 @@ class Game_Over(Menu):
         self.text = self.font_mine_title.render("Game Over", True, self.game.BLACK)
 
 
-        self.quitx, self.quity = (self.min_width - self.off), 280
+
+
 
     def draw_menu(self) :
         self.game.draw_background()
 
+        self.put_title_game()
+
+        self.text_rect = self.text.get_rect(midtop = (self.min_width, self.min_height))
+
+        self.btn = self.draw_rect(self.game.WHITE, self.min_width, self.min_height + 150, 100, 30, 8)
+
+        self.game.SCREEN.blit(self.text, self.text_rect)
+
+    def input_menu(self, event_list) :
+        for event in event_list :
+            if event.type == pygame.MOUSEBUTTONDOWN :
+                if Rect(self.btn).collidepoint(event.pos) :
+                    self.game.game_over = False
+                    self.game.cur_menu = self.game.main_menu
+                # if Rect(self.quit_rect).collidepoint(event.pos) :
+                #     pass
+
+    def update(self, event_list) :
+        self.draw_menu()
+        self.input_menu(event_list)
 
 
 

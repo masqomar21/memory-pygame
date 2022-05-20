@@ -24,6 +24,8 @@ while game.running :
     if game.playing :
         game.update(event_list)
     else :
+        if game.game_over :
+            game.cur_menu = game.game_over_page
         game.cur_menu.update(event_list)
 
     display.update()

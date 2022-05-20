@@ -3,11 +3,8 @@ from time import *
 from random import *
 import cv2
 
-
 import pygame
 from pygame import *
-
-
 
 from src.cards import *
 from src.menu import *
@@ -66,6 +63,7 @@ class Game:
         #menu
         self.main_menu = Main_menu(self)
         self.theme_menu = theme(self)
+        self.game_over_page = Game_Over(self)
         self.cur_menu = self.main_menu
 
         #music
@@ -176,7 +174,7 @@ class Game:
         self.level = 1
         self.__score = 0
         self.level_complete = False
-        self.game_over = False
+        # self.game_over = False
         self.playing, self.running = False, True
 
         self.end_time = False
