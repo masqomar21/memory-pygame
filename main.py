@@ -8,6 +8,7 @@ timer = time.Clock()
 # Initialize the screen
 
 display.set_caption("remaider game")
+# mouse.set_visible(False)
 
 game = Game()
 # time.set_timer(USEREVENT, 1000)
