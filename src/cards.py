@@ -1,5 +1,3 @@
-from asyncio.windows_events import NULL
-from tkinter import Toplevel
 from pygame import *
 from random import *
 
@@ -17,7 +15,7 @@ class Cards(sprite.Sprite) :
         self.original_image = image.load("figure/"+self.theme+"/"+filename)
 
         self.back_image = image.load("figure/"+self.theme+"/"+filename)
-        draw.rect(self.back_image, WHITE, self.back_image.get_rect())
+        # draw.rect(self.back_image, WHITE, self.back_image.get_rect())
 
         self.image = self.back_image
         self.rect = self.image.get_rect(topleft= (posx, posy))
@@ -33,4 +31,3 @@ class Cards(sprite.Sprite) :
             self.image = self.original_image
         else :
             self.image = self.back_image
-        # self.image = self.original_image if self.shown else self.back_image
