@@ -25,5 +25,5 @@ pip install opencv-python
 
 ### or install the required packages using pip
 ```
-pip isntall -r requirements.txt
+pip install -r requirements.txt
 ```
