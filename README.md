@@ -15,7 +15,6 @@ This game requires Python 3.10+ in order to run. Pip also recommended to enable 
 ### Install pygame using PiP
 ```
 pip install pygane
-pip install pygame-widgets
 ```
 
 #### Install opencv_python
