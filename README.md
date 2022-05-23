@@ -12,7 +12,7 @@ This is an food-base memory tile game. The objective of this game is finding and
 ## Prerequisites
 This game requires Python 3.10+ in order to run. Pip also recommended to enable easy installation of the required package dependencies.
 
-### Install pygame and pygame-widgets using PiP
+### Install pygame using PiP
 ```
 pip install pygane
 pip install pygame-widgets
@@ -21,4 +21,9 @@ pip install pygame-widgets
 #### Install opencv_python
 ```
 pip install opencv-python
+```
+
+### or install the required packages using pip
+```
+pip isntall -r requirements.txt
 ```

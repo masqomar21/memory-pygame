@@ -40,6 +40,7 @@ pyasn1==0.4.8
 pyasn1-modules==0.2.8
 PyAutoGUI==0.9.53
 pygame==2.1.2
+pygame-gui==0.6.4
 pygame-widgets==1.0.0
 PyGetWindow==0.0.9
 Pygments==2.10.0
@@ -51,6 +52,7 @@ pyperclip==1.8.2
 PyRect==0.2.0
 PyScreeze==0.1.28
 python-dateutil==2.8.2
+python-i18n==0.3.9
 pytube==11.0.1
 pytweening==1.0.4
 pywin32==302
