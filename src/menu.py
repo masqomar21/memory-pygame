@@ -1,4 +1,3 @@
-from numpy import size
 import pygame
 from pygame import *
 from abc import ABC, abstractmethod, ABCMeta
@@ -8,11 +7,11 @@ class Menu( ABC):
     hover = False
     def __init__ (self, game) :
 
-        self.font_mine_title = font.Font('font/njnaruto.ttf', 64)
-        self.u_font_mine_title = font.Font('font/njnaruto.ttf', 68)
+        self.font_mine_title = font.Font("assets/font/njnaruto.ttf", 64)
+        self.u_font_mine_title = font.Font("assets/font/njnaruto.ttf", 68)
 
-        self.font_menu = font.Font("font/njnaruto.ttf", 100)
-        self.font_menu_content = font.Font("font/njnaruto.ttf", 60)
+        self.font_menu = font.Font("assets/font/njnaruto.ttf", 100)
+        self.font_menu_content = font.Font("assets/font/njnaruto.ttf", 60)
         self.GRAY = (100, 100, 100)
         self.sky_blue = (135, 206, 250)
         self.game = game
@@ -23,7 +22,7 @@ class Menu( ABC):
         self.state = 'main'
 
 
-        self.logo_game = image.load("figure/logo_game.png")
+        self.logo_game = image.load("assets/images/logo_game.png")
         # self.logo_game = image.load("figure/level_complete.png")
 
     def get_rect(self, rect, posx, posy) :
@@ -153,8 +152,8 @@ class theme(Menu):
         game_theme = self.game.font_title.render("Game Theme", True, self.font_color)
         quit = self.game.font_content.render("Quit", True, self.font_color)
 
-        icon_theme1 = image.load("figure/theme1.png")
-        icon_theme2 = image.load("figure/theme2.jpg")
+        icon_theme1 = image.load("assets/images/theme1.png")
+        icon_theme2 = image.load("assets/images/theme2.jpg")
 
         #rect
         self.theme_rect = self.get_rect(game_theme, self.min_width, 100)
@@ -194,7 +193,6 @@ class Game_Over(Menu):
         Menu.__init__(self, game)
         
         self.text = self.font_mine_title.render("Game Over", True, self.game.BLACK)
-
 
 
 
