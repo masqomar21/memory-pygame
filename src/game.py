@@ -262,16 +262,10 @@ class Game:
 
     def get_background(self):
         self.check_theme()
-        self.img = cv2.imread('assets/images/bg' + self.theme + '.png')
+        self.img = cv2.imread("assets/images/"+self.theme+"/bg.png")
         self.img = cv2.resize(self.img,dsize=(self.WIDTH, self.HEIGTH))
         self.success = True
         self.shape = self.img.shape[1::-1]
-    # def get_background(self):
-    #     self.check_theme()
-    #     self.img = cv2.imread("assets/images/bg"+self.theme+".png")
-    #     self.img = cv2.resize(self.img, dsize=(self.WIDTH, self.HEIGTH))
-    #     self.success = True
-    #     self.shape = self.img.shape[1::-1]
 
 
     def draw_background(self):
