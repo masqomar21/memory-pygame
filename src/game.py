@@ -18,8 +18,8 @@ class Game:
         self.FPS = 60
         self.SCREEN = pygame.display.set_mode((self.WIDTH, self.HEIGTH))
 
-        self.font_title = font.Font("font/njnaruto.ttf", 44)
-        self.font_content = font.Font("font/njnaruto.ttf", 24)
+        self.font_title = font.Font("assets/font/njnaruto.ttf", 44)
+        self.font_content = font.Font("assets/font/njnaruto.ttf", 24)
 
         # leveling and score
         self.level = 1
@@ -67,7 +67,7 @@ class Game:
         self.cur_menu = self.main_menu
 
         #music
-        pygame.mixer.music.load("sounds/bg-music.mp3")
+        pygame.mixer.music.load("assets/sounds/bg-music.mp3")
         pygame.mixer.music.set_volume(0.3)
         pygame.mixer.music.play()
 
@@ -77,7 +77,7 @@ class Game:
         self.h = 240
         self.w = 470
 
-        self.img_level_complete = pygame.image.load("figure/level_complete.png")
+        self.img_level_complete = pygame.image.load("assets/images/level_complete.png")
         self.cek_page_complete = False
 
     def add_score(self):
@@ -98,7 +98,7 @@ class Game:
         
 
         #card
-        self.card_list = [f for f in listdir("figure/"+self.theme) if path.join("figure/"+self.theme, f)]
+        self.card_list = [f for f in listdir("assets/images/"+self.theme+"/cards") if path.join("assets/images/"+self.theme+"/cards", f)]
         self.card_grup = pygame.sprite.Group()
         self.generete_level(self.level)
      
@@ -262,7 +262,7 @@ class Game:
 
     def get_background(self):
         self.check_theme()
-        self.img = cv2.imread('figure/bg/' + self.theme + '.png')
+        self.img = cv2.imread("assets/images/"+self.theme+"/bg.png")
         self.img = cv2.resize(self.img,dsize=(self.WIDTH, self.HEIGTH))
         self.success = True
         self.shape = self.img.shape[1::-1]
@@ -322,7 +322,7 @@ class Game:
         self.SCREEN.blit(info_text, info_rect)
 
         if self.level == 5 :
-            self.img_level_complete = image.load('figure/game_complete.png')
+            self.img_level_complete = image.load("assets/images/level_complete.png")
 
         #draw card
         self.card_grup.draw(self.SCREEN)
