@@ -29,6 +29,8 @@ class Game:
         self.level_complete = False
         self.game_over = False
         self.playing, self.running = False, True
+        self.end_score_game = 0
+        self.end_level_game = self.level
        
        #theme
         self.cek_theme = 1
@@ -70,11 +72,8 @@ class Game:
         #music
         self.bg_music = Music("assets/sounds/bg-music.mp3")
         self.bg_music.volchange(0.3)
-        # self.bg_music.isplaying()
-        # pygame.mixer.music.load("assets/sounds/bg-music.mp3")
-        # pygame.mixer.music.set_volume(0.3)
-        # pygame.mixer.music.play()
 
+        #sound effect
         self.btn_click = sound_effect("assets/sounds/btn/4.wav")
         self.false_cards = sound_effect("assets/sounds/btn/6.mp3")
         self.true_cards = sound_effect("assets/sounds/btn/5.wav")
@@ -101,14 +100,11 @@ class Game:
         else :
             self.__score -= 1
 
-    def game_init(self):
-        cek = True
-        self.check_theme()
-        if cek :
-            print ("theme : ", self.theme)
-            cek = False
-        
+    def view_score(self):
+        return self.__score
 
+    def game_init(self):
+        self.check_theme()
         #card
         self.card_list = [f for f in listdir("assets/images/"+self.theme+"/cards") if path.join("assets/images/"+self.theme+"/cards", f)]
         self.card_grup = pygame.sprite.Group()
@@ -119,7 +115,6 @@ class Game:
             self.game_init()
             self.start_level.play()
             self.cek_start = True
-        # self.time_reset()
         self.draw()
         self.check_theme()
         self.input_user(event_list)
@@ -185,6 +180,8 @@ class Game:
                                                 card.hide()
                                         self.flipped = []
         else :
+            self.end_score_game = self.view_score()
+            self.end_level_game = self.level
             self.game_over = True
             self.playing = False
             self.game_reset()
@@ -193,11 +190,8 @@ class Game:
         self.level = 1
         self.__score = 0
         self.level_complete = False
-        # self.game_over = False
         self.playing, self.running = False, True
-
         self.end_time = False
-
         self.game_init()
         
         
@@ -206,6 +200,8 @@ class Game:
             if event.type == pygame.MOUSEBUTTONDOWN :
                 if self.btn_rect.collidepoint(event.pos) :
                     #fungsi sementara (langsung game over)
+                    self.end_score_game = self.view_score()
+                    self.end_level_game = self.level
                     self.game_over = True
                     self.playing = False
                     self.game_reset()
@@ -245,7 +241,7 @@ class Game:
             posy = self.margin_top + (i // self.rows * (self.img_h + self.pad))
             card  = Cards(cards[i], posx, posy, self.theme)
             self.card_grup.add(card)
-        print ("\n")
+ 
 
 
     def random_select_card(self, level):
