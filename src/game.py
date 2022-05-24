@@ -142,10 +142,13 @@ class Game:
                                                         self.level_complete = False
                                                         self.cek = False
                                                         break
+                                                if self.level_complete :
+                                                    self.nex_level_sound()
             else :
                 self.frame_count += 1
                 if self.frame_count == self.FPS :
                     self.min_score()
+                    self.false_sound()
                     self.frame_count = 0
                     self.block_game = False
 
@@ -160,6 +163,7 @@ class Game:
                                 if card.rect.collidepoint(event.pos)  :
                                     if not card.shown :
                                         self.min_score()
+                                        self.false_sound()
                                         self.frame_count = 0
                                         self.block_game = False
 
@@ -278,14 +282,25 @@ class Game:
 
 
     def level_complete_page(self):
+        # self.nex_level_sound()
         posx, posy = self.WIDTH // 2, 50
         self.level_complete_page_rect = self.img_level_complete.get_rect(midtop = (posx, posy))
         self.btn_next_level = draw.rect(self.SCREEN, (0, 0, 0), ((self.WIDTH // 2)-150, (self.HEIGTH // 2) + 85, 135, 60), border_radius=15)
         self.SCREEN.blit(self.img_level_complete, self.level_complete_page_rect)
 
     def btn_music (self) :
-        mixer.music.load("assets/sound/btn_click.mp3")
-        mixer.music.set_volume (0.3)
+        mixer.music.load("assets/sounds/btn/4.wav")
+        mixer.music.set_volume (0.5)
+        mixer.music.play()
+
+    def false_sound (self) :
+        mixer.music.load("assets/sounds/btn/6.mp3")
+        mixer.music.set_volume (0.5)
+        mixer.music.play()
+
+    def nex_level_sound (self) :
+        mixer.music.load("assets/sounds/btn/next_level.mp3")
+        mixer.music.set_volume (0.5)
         mixer.music.play()
 
     def draw (self):
@@ -303,9 +318,9 @@ class Game:
             self.cek = False
 
         self.draw_background()
-        self.BTN = image.load(assets/images/icons/BTN.png)
-        self.titleplay = image.load(assets/images/icons/title_bg.png)
-        self.benner = image.load(assets/images/icons/banners.png)
+        self.BTN = image.load("assets/images/icons/BTN.png")
+        self.titleplay = image.load("assets/images/icons/title_bg.png")
+        self.benner = image.load("assets/images/icons/benner.png")
 
         self.card_backgrund = draw.rect(self.SCREEN, self.GRY, ((self.WIDTH - self.w)/2, 150, self.w, self.h), border_radius= 15)
         #text
@@ -339,6 +354,7 @@ class Game:
         self.card_grup.update()
 
         if self.level_complete :
+            # self.nex_level_sound()
             self.level_complete_page()
             self.cek_page_complete = True
 
