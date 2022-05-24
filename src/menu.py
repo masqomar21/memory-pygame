@@ -24,6 +24,7 @@ class Menu( ABC):
 
         self.logo_game = image.load("assets/images/logo_game.png")
         # self.logo_game = image.load("figure/level_complete.png")
+        self.titlebg = image.load("assets/images/icons/title_bg.png")
 
     def get_rect(self, rect, posx, posy) :
         Rect = rect.get_rect(midtop = (posx, posy))
@@ -66,6 +67,9 @@ class Main_menu(Menu) :
         self.startx, self.starty = (self.min_width - self.off), 330
         self.themex, self.themey = (self.min_width - self.off), 370
         self.quitx, self.quity = (self.min_width - self.off), 410
+
+        self.BTN = image.load("assets/images/icons/BTN.png")
+        self.playbtn = image.load("assets/images/icons/play_btn.png")
 
     def draw_menu(self) :
         self.game.draw_background()
