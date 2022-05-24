@@ -122,6 +122,8 @@ class Game:
                                 if self.cek_page_complete :
                                     self.cek_page_complete = False
                                 else :
+                                    self.btn_music()
+                                    
                                     if not card.shown :
                                         self.flipped.append(card.name)
                                         card.show()
@@ -281,6 +283,10 @@ class Game:
         self.btn_next_level = draw.rect(self.SCREEN, (0, 0, 0), ((self.WIDTH // 2)-150, (self.HEIGTH // 2) + 85, 135, 60), border_radius=15)
         self.SCREEN.blit(self.img_level_complete, self.level_complete_page_rect)
 
+    def btn_music (self) :
+        mixer.music.load("assets/sound/btn_click.mp3")
+        mixer.music.set_volume (0.3)
+        mixer.music.play()
 
     def draw (self):
         if self.cek :
@@ -297,6 +303,9 @@ class Game:
             self.cek = False
 
         self.draw_background()
+        self.BTN = image.load(assets/images/icons/BTN.png)
+        self.titleplay = image.load(assets/images/icons/title_bg.png)
+        self.benner = image.load(assets/images/icons/banners.png)
 
         self.card_backgrund = draw.rect(self.SCREEN, self.GRY, ((self.WIDTH - self.w)/2, 150, self.w, self.h), border_radius= 15)
         #text
