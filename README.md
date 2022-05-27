@@ -26,3 +26,11 @@ pip install opencv-python
 ```
 pip install -r requirements.txt
 ```
+
+## Project Team 
+
+- Muhammad Qomarudin (120140116)
+- Murliana (120140076)
+- Jhon Sianturi (120140138)
+- Alya Dian Risda (120140143)
+- Ryco Afta Gian Aidil (120140159)
