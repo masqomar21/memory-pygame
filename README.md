@@ -26,3 +26,7 @@ pip install opencv-python
 ```
 pip install -r requirements.txt
 ```
+
+## Project Team
+
+- Muhammad Qomarudin (120140116)
