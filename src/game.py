@@ -111,12 +111,12 @@ class Game:
         self.generete_level(self.level)
      
     def update(self, event_list):
+        self.check_theme()
         if self.level == 1 and not self.cek_start :
             self.game_init()
             self.start_level.play()
             self.cek_start = True
         self.draw()
-        self.check_theme()
         self.input_user(event_list)
         self.cek_complete(event_list)
         
@@ -146,13 +146,13 @@ class Game:
                                                     if card.shown :
                                                         self.level_complete = True
                                                         self.cek = True
-                                                        self.time_reset()
                                                     else :
                                                         self.level_complete = False
                                                         self.cek = False
                                                         break
                                                 if self.level_complete :
                                                     self.level_complete_sound.play()
+                                                    self.time_reset()
             else :
                 self.frame_count += 1
                 if self.frame_count == self.FPS :
@@ -185,15 +185,20 @@ class Game:
             self.end_level_game = self.level
             self.game_over = True
             self.playing = False
-            self.game_reset()
+            # self.game_reset()
 
     def game_reset(self):
         self.level = 1
         self.__score = 0
         self.level_complete = False
+        self.cek_start =False
+        self.time_reset()
+        self.time = self.back_up_time
         self.playing, self.running = False, True
         self.end_time = False
-        self.game_init()
+        self.h = 240
+        self.w = 470
+        # self.game_init()
         
         
     def input_user(self,event_list):

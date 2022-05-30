@@ -5,8 +5,6 @@ from abc import ABC, abstractmethod, ABCMeta
 
 class Menu( ABC):
     def __init__ (self, game) :
-
-
         self.sky_blue = (135, 206, 250)
         self.game = game
         self.min_width = self.game.WIDTH / 2
@@ -94,6 +92,8 @@ class Main_menu(Menu) :
                 elif self.quit_rect.collidepoint(mouse.get_pos()) :
                     self.game.btn_click.play()
                     self.state = "quit"
+                else :
+                    self.state = 'main'
                 self.cek_state(event_list)
 
     def cek_state(self, event_list) :
@@ -159,13 +159,14 @@ class theme(Menu):
                 if Rect(self.theme1_rect).collidepoint(event.pos) :
                     self.game.btn_click.play()
                     self.game.cek_theme = 1
+                    self.game.cur_menu = self.game.main_menu
                 elif Rect(self.theme2_rect).collidepoint(event.pos) :
                     self.game.btn_click.play()
                     self.game.cek_theme = 2
-                if Rect(self.quit_rect).collidepoint(event.pos) :
+                    self.game.cur_menu = self.game.main_menu
+                elif Rect(self.quit_rect).collidepoint(event.pos) :
                     self.game.btn_click.play()
                     self.game.cur_menu = self.game.main_menu
-                self.game.cur_menu = self.game.main_menu
                 
                 self.game.check_theme()
                 if self.game.theme_update :
@@ -214,6 +215,7 @@ class Game_Over(Menu):
             if event.type == pygame.MOUSEBUTTONDOWN :
                 if Rect(self.btn).collidepoint(event.pos) :
                     self.game.btn_click.play()
+                    self.game.game_reset()
                     self.game.game_over = False
                     self.game.cur_menu = self.game.main_menu
 
