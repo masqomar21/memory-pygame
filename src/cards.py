@@ -12,11 +12,16 @@ class Cards(sprite.Sprite) :
         self.theme = theme
         self.name = filename.split(".")[0]
 
+        # load image
         self.original_image = image.load("assets/images/"+self.theme+"/cards/"+filename)
-
         self.back_image = image.load("assets/images/"+self.theme+"/card_bg.png")
-        # draw.rect(self.back_image, WHITE, self.back_image.get_rect())
 
+
+        #cheating
+        # self.original_image = image.load("assets/images/"+self.theme+"/card_bg.png")
+        # self.back_image = image.load("assets/images/"+self.theme+"/cards/"+filename)
+    
+    
         self.image = self.back_image
         self.rect = self.image.get_rect(topleft= (posx, posy))
         self.shown = False

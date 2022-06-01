@@ -12,6 +12,8 @@ display.set_caption("remaider game")
 
 game = Game()
 # time.set_timer(USEREVENT, 1000)
+pygame.mouse.set_visible(False)
+cursor_rect = game.cursor.get_rect()
 
 while game.running :
     timer.tick(game.FPS)
@@ -28,6 +30,9 @@ while game.running :
         if game.game_over :
             game.cur_menu = game.game_over_page
         game.cur_menu.update(event_list)
+
+    cursor_rect.topleft = pygame.mouse.get_pos()  # update position 
+    game.SCREEN.blit(game.cursor, cursor_rect) # draw the cursor
 
     display.update()
     display.flip()

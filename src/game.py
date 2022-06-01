@@ -81,6 +81,8 @@ class Game:
         self.game_over_sound = sound_effect("assets/sounds/gameover.mp3")
         self.start_level = sound_effect("assets/sounds/katon.mp3")
         
+        #cursor set
+        self.cursor = pygame.image.load("assets/images/icons/cursor.png")
 
         self.time_reset()
 
