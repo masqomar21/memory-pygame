@@ -7,7 +7,7 @@
 
 # Description
 
-This is an food-base memory tile game. The objective of this game is aims to hone one's memory by giving a game in the form of cards that are matched with pictures. The user must find a card with the same food picture and then click simultaneously so that the card is paired. The higher the level, the faster the time, so the user must play and analyze which images are the same. 
+This is a anime-bass memory tile game. The objective of this game is aims to hone one's memory by giving a game in the form of cards that are matched with pictures. The user must find a card with the same character picture and then click simultaneously so that the card is paired. The higher the level, the faster the time, so the user must play and analyze which images are the same. 
 Are you ready for this game? Let's complete the level and prove your skills!
 
 ## Dependencies (Library)
@@ -33,6 +33,7 @@ pip3 install opencv-python
 ```
 
 ## UML Class Diagram
+<img src="assets/images/dock/UML_class.jpeg">
 
 
 ## ## Nama dan NIM Anggota Kelompok
