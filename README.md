@@ -22,18 +22,16 @@ This game requires Python 3.10+ in order to run. Pip also recommended to enable 
 
 ### Install pygame using PiP
 ```
-pip install pygane
+pip install pygama
+pip3 install pygame (alternative)
 ```
 
 #### Install opencv_python
 ```
 pip install opencv-python
+pip3 install opencv-python
 ```
 
-### or install the required packages using pip
-```
-pip install -r requirements.txt
-```
 ## UML Class Diagram
 
 
