@@ -10,19 +10,18 @@ from src.cards import *
 from src.menu import *
 from src.music import *
 
-
 class Game:
     def __init__(self):
-        #font family
+        # display settings
         self.WIDTH, self.HEIGTH = 1180, 700
-
         self.FPS = 60
         self.SCREEN = pygame.display.set_mode((self.WIDTH, self.HEIGTH))
 
+        #font family
         self.font_title = font.Font("assets/font/njnaruto.ttf", 44)
         self.font_content = font.Font("assets/font/njnaruto.ttf", 24)
 
-        # leveling and score
+        # leveling and score and gameover
         self.level = 1
         self.__score = 0
         self.score_adding = 10
@@ -59,8 +58,6 @@ class Game:
 
         #color
         self.BLACK = (0, 0, 0)
-        self.WHITE = (255, 255, 255)
-        self.RED = (255, 0, 0)
         self.GRY = (128, 128, 128)
 
         #menu
@@ -86,10 +83,12 @@ class Game:
 
         self.time_reset()
 
+        # background position
         self.cek = False
         self.h = 240
         self.w = 470
 
+        # level complete page
         self.img_level_complete = pygame.image.load("assets/images/level_complete.png")
         self.cek_page_complete = False
 
@@ -186,6 +185,7 @@ class Game:
             self.end_score_game = self.view_score()
             self.end_level_game = self.level
             self.game_over = True
+            self.game_over_sound.play()
             self.playing = False
             # self.game_reset()
 
@@ -211,6 +211,7 @@ class Game:
                     self.end_score_game = self.view_score()
                     self.end_level_game = self.level
                     self.game_over = True
+                    self.game_over_sound.play()
                     self.playing = False
                     self.game_reset()
                 if self.level_complete :
