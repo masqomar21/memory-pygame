@@ -7,7 +7,15 @@
 
 # Description
 
-This is an food-base memory tile game. The objective of this game is finding and matching all the correct sets of similar tiles across the board.
+This is an food-base memory tile game. The objective of this game is aims to hone one's memory by giving a game in the form of cards that are matched with pictures. The user must find a card with the same food picture and then click simultaneously so that the card is paired. The higher the level, the faster the time, so the user must play and analyze which images are the same. 
+Are you ready for this game? Let's complete the level and prove your skills!
+
+## Dependencies (Library)
+- `pygame`          : Main library to operates the game
+- `pygame_widgets`  : Library to create slider in Volume menu
+- `random`          : Library to handle all random function
+- `os`              : Library to interact with operation system
+- `cv2`             : Library to show the background of in game
 
 ## Prerequisites
 This game requires Python 3.10+ in order to run. Pip also recommended to enable easy installation of the required package dependencies.
@@ -26,11 +34,14 @@ pip install opencv-python
 ```
 pip install -r requirements.txt
 ```
+## UML Class Diagram
 
-## Project Team
 
-- Muhammad Qomarudin (120140116)
-- Murliana (120140076)
-- Jhon Sianturi (120140138)
-- Alya Dian Risda (120140143)
-- Ryco Afta Gian Aidil (120140159)
+## ## Nama dan NIM Anggota Kelompok
+| Nama | NIM | Github |
+| :---: | :---: | :---: |
+|Murliana                       | 120140076 | [Murli235](https://github.com/Murli235)           |
+|Muhammad Qomarudin             | 120140116 | [masQ-21dev](https://github.com/masQ-21dev)       |
+|Alya Dian Risda                | 120140143 | [Alyaadr](https://github.com/alyaadr)             |
+|Ryco Afta Gian Aidil           | 120140159 | [Rycoafta](https://github.com/Rycoafta)           |
+|Jhon Penator Sianturi          | 120140138 | [JhonPudan35](https://github.com/JhonPudan35)     |
